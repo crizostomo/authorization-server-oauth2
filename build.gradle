@@ -1,0 +1,25 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '2.7.0'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+}
+
+group = 'com.beverage'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	implementation group: 'org.springframework.security.oauth', name: 'spring-security-oauth2', version: '2.3.7.RELEASE'
+
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
