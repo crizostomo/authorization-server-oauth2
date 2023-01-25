@@ -27,7 +27,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .secret(passwordEncoder.encode("web123"))
                 .authorizedGrantTypes("password") // Type of flow used = password
                 .scopes("write", "read")
-                .accessTokenValiditySeconds(60 * 60 * 6); // The standard time is 12 hours
+                .accessTokenValiditySeconds(60 * 60 * 6)
+                .and()
+                .withClient("checktoken")
+                .secret(passwordEncoder.encode("check123")); // The standard time is 12 hours
     }
 
     @Override
