@@ -32,6 +32,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .authorizedGrantTypes("password", "refresh_token") // Type of flow used = password
                 .scopes("write", "read")
                 .accessTokenValiditySeconds(60 * 60 * 6)
+                .refreshTokenValiditySeconds(60 * 24 * 60 * 60)
                 .and()
                 .withClient("checktoken")
                 .secret(passwordEncoder.encode("check123")); // The standard time is 12 hours
@@ -46,6 +47,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints.authenticationManager(authenticationManager) // It needs this, otherwise the 'password flow' does not work
-                .userDetailsService(userDetailsService);
+                .userDetailsService(userDetailsService)
+                .reuseRefreshTokens(false); // It generates another refresh token
     }
 }
