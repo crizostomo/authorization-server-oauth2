@@ -33,7 +33,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .scopes("write", "read")
                 .accessTokenValiditySeconds(60 * 60 * 6)
                 .refreshTokenValiditySeconds(60 * 24 * 60 * 60)
-                .and()
+                    .and()
+                .withClient("invoice")
+                .secret(passwordEncoder.encode("invoice123"))
+                .authorizedGrantTypes("client_credentials") // Type of flow used = password
+                .scopes("write", "read")
+                    .and()
                 .withClient("checktoken")
                 .secret(passwordEncoder.encode("check123")); // The standard time is 12 hours
     }
