@@ -34,6 +34,13 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .accessTokenValiditySeconds(60 * 60 * 6)
                 .refreshTokenValiditySeconds(60 * 24 * 60 * 60)
                     .and()
+                .withClient("beverage-analytics")
+                .secret(passwordEncoder.encode("beverage23"))
+                .authorizedGrantTypes("authorization_code") // It is here that we authorize the client with the scopes
+                .scopes("write", "read")
+                .redirectUris("http://client-application")
+// http://localhost:8081/oauth/authorize?response_type=code&client_id=beverage-analytics&state=abc&redirect_uri=http://client-application
+                    .and()
                 .withClient("invoice")
                 .secret(passwordEncoder.encode("invoice123"))
                 .authorizedGrantTypes("client_credentials") // Type of flow used = password
