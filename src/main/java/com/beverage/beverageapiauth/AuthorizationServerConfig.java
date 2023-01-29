@@ -44,13 +44,15 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .scopes("write", "read")
                 .redirectUris("http://client-application")
 //                .redirectUris("http:/www.beverage-analytics.local:8082") // Class 22.19
-// http://localhost:8081/oauth/authorize?response_type=code&client_id=beverage-analytics&state=abc&redirect_uri=http://client-application
+// http://localhost:8081/oauth/authorize?response_type=code&client_id=beverage-analytics&state=abc&redirect_uri=http://
+// client-application
                     .and()
                 .withClient("webadmin")
                 .authorizedGrantTypes("implicit")
                 .scopes("write", "read")
                 .redirectUris("http://client-web-application")
-// http://localhost:8081/oauth/authorize?response_type=token&client_id=webadmin&state=abc&redirect_uri=http://client-web-application
+// http://localhost:8081/oauth/authorize?response_type=token&client_id=webadmin&state=abc&redirect_uri=http://
+// client-web-application
                 .and()
                 .withClient("invoice")
                 .secret(passwordEncoder.encode("invoice123"))
@@ -61,10 +63,14 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .secret(passwordEncoder.encode("check123")); // The standard time is 12 hours
     }
 
+// http://localhost:8081/oauth/authorize?response_type=code&client_id=beverage-analytics&redirect_uri=http://client-application
+// &code_challenge=xxxxxxxxxxx&code_challenge_method=s256
+// https://tonyxu-io.github.io/pkce-generator/
+
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-        security.checkTokenAccess("isAuthenticated()");
-//                .allowFormAuthenticationForClients();
+        security.checkTokenAccess("isAuthenticated()")
+                .allowFormAuthenticationForClients();
 //        security.checkTokenAccess("permitAll()"); // It permits all access
     }
 
