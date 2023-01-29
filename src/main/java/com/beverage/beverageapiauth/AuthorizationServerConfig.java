@@ -42,6 +42,13 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 //                .redirectUris("http:/www.beverage-analytics.local:8082") // Class 22.19
 // http://localhost:8081/oauth/authorize?response_type=code&client_id=beverage-analytics&state=abc&redirect_uri=http://client-application
                     .and()
+                .withClient("webadmin")
+                .authorizedGrantTypes("implicit")
+                .scopes("write", "read")
+                .redirectUris("http://client-web-application")
+// http://localhost:8081/oauth/authorize?response_type=token&client_id=webadmin&state=abc&redirect_uri=http://client-web-application
+
+                .and()
                 .withClient("invoice")
                 .secret(passwordEncoder.encode("invoice123"))
                 .authorizedGrantTypes("client_credentials") // Type of flow used = password
