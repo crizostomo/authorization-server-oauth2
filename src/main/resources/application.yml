@@ -6,3 +6,10 @@ server:
 #    host: localhost
 #    password:
 #    port: 6379
+
+beverage:
+  jwt:
+    keystore:
+      path: keystores/beverage.jks
+      password: 654321
+      keypair-alias: beverage

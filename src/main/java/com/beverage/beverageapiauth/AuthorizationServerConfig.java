@@ -35,6 +35,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private UserDetailsService userDetailsService;
 
+    @Autowired
+    private JwtKeyStoreProperties jwtKeyStoreProperties;
+
 //    @Autowired
 //    private RedisConnectionFactory redisConnectionFactory;
 
@@ -98,9 +101,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
         var jwtAccessTokenConverter = new JwtAccessTokenConverter();
 //        jwtAccessTokenConverter.setSigningKey("beveragea45sd4s56f4sd5f4d5g5dsf41d5fg4d5f"); // Symmetric key
-        var jkResource = new ClassPathResource("keystores/beverage.jks");
-        var keyStorePass = "654321";
-        var keyPairAlias = "beverage";
+        var jkResource = new ClassPathResource(jwtKeyStoreProperties.getPath());
+        var keyStorePass = jwtKeyStoreProperties.getPassword();
+        var keyPairAlias = jwtKeyStoreProperties.getKeypairAlias();
 
         var keyStoreKeyFactory = new KeyStoreKeyFactory(jkResource, keyStorePass.toCharArray());
         var keyPair = keyStoreKeyFactory.getKeyPair(keyPairAlias);
