@@ -1,4 +1,4 @@
-package com.beverage.beverageapiauth;
+package com.beverage.beverageapiauth.core;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

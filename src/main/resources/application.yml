@@ -13,3 +13,9 @@ beverage:
       path: keystores/beverage.jks
       password: 654321
       keypair-alias: beverage
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/beverage?createDatabaseIfNotExist=true&serverTimezone=UTC
+    username: root
+    password: root

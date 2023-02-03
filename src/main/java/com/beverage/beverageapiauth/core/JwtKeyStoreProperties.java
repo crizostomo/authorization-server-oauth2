@@ -1,4 +1,4 @@
-package com.beverage.beverageapiauth;
+package com.beverage.beverageapiauth.core;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
