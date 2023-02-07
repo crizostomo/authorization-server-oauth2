@@ -59,7 +59,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 //                .refreshTokenValiditySeconds(60 * 24 * 60 * 60)
 //                    .and()
 //                .withClient("beverage-analytics")
-//                .secret(passwordEncoder.encode("beverage23"))
+//                .secret(passwordEncoder.encode("web123"))
 //                .authorizedGrantTypes("authorization_code") // It is here that we authorize the client with the scopes
 //                .scopes("WRITE", "READ")
 //                .redirectUris("http://client-application")
@@ -75,7 +75,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 //// client-web-application
 //                .and()
 //                .withClient("invoice")
-//                .secret(passwordEncoder.encode("invoice123"))
+//                .secret(passwordEncoder.encode("web123"))
 //                .authorizedGrantTypes("client_credentials") // Type of flow used = password
 //                .scopes("WRITE", "READ")
 //                    .and()
