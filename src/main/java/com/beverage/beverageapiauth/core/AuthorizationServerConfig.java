@@ -21,14 +21,15 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
 
+import javax.sql.DataSource;
 import java.util.Arrays;
 
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+//    @Autowired
+//    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -42,39 +43,44 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 //    @Autowired
 //    private RedisConnectionFactory redisConnectionFactory;
 
+    @Autowired
+    private DataSource dataSource;
+
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.inMemory()
-                .withClient("beverage-web")
-                .secret(passwordEncoder.encode("web123"))
-                .authorizedGrantTypes("password", "refresh_token") // Type of flow used = password
-                .scopes("WRITE", "READ")
-                .accessTokenValiditySeconds(60 * 60 * 6)
-                .refreshTokenValiditySeconds(60 * 24 * 60 * 60)
-                    .and()
-                .withClient("beverage-analytics")
-                .secret(passwordEncoder.encode("beverage23"))
-                .authorizedGrantTypes("authorization_code") // It is here that we authorize the client with the scopes
-                .scopes("WRITE", "READ")
-                .redirectUris("http://client-application")
-//                .redirectUris("http:/www.beverage-analytics.local:8082") // Class 22.19
-// http://localhost:8081/oauth/authorize?response_type=code&client_id=beverage-analytics&state=abc&redirect_uri=http://
-// client-application
-                    .and()
-                .withClient("webadmin")
-                .authorizedGrantTypes("implicit")
-                .scopes("WRITE", "READ")
-                .redirectUris("http://client-web-application")
-// http://localhost:8081/oauth/authorize?response_type=token&client_id=webadmin&state=abc&redirect_uri=http://
-// client-web-application
-                .and()
-                .withClient("invoice")
-                .secret(passwordEncoder.encode("invoice123"))
-                .authorizedGrantTypes("client_credentials") // Type of flow used = password
-                .scopes("WRITE", "READ")
-                    .and()
-                .withClient("checktoken")
-                .secret(passwordEncoder.encode("check123")); // The standard time is 12 hours
+        clients
+                .jdbc(dataSource);
+//                .inMemory()
+//                .withClient("beverage-web")
+//                .secret(passwordEncoder.encode("web123"))
+//                .authorizedGrantTypes("password", "refresh_token") // Type of flow used = password
+//                .scopes("WRITE", "READ")
+//                .accessTokenValiditySeconds(60 * 60 * 6)
+//                .refreshTokenValiditySeconds(60 * 24 * 60 * 60)
+//                    .and()
+//                .withClient("beverage-analytics")
+//                .secret(passwordEncoder.encode("beverage23"))
+//                .authorizedGrantTypes("authorization_code") // It is here that we authorize the client with the scopes
+//                .scopes("WRITE", "READ")
+//                .redirectUris("http://client-application")
+////                .redirectUris("http:/www.beverage-analytics.local:8082") // Class 22.19
+//// http://localhost:8081/oauth/authorize?response_type=code&client_id=beverage-analytics&state=abc&redirect_uri=http://
+//// client-application
+//                    .and()
+//                .withClient("webadmin")
+//                .authorizedGrantTypes("implicit")
+//                .scopes("WRITE", "READ")
+//                .redirectUris("http://client-web-application")
+//// http://localhost:8081/oauth/authorize?response_type=token&client_id=webadmin&state=abc&redirect_uri=http://
+//// client-web-application
+//                .and()
+//                .withClient("invoice")
+//                .secret(passwordEncoder.encode("invoice123"))
+//                .authorizedGrantTypes("client_credentials") // Type of flow used = password
+//                .scopes("WRITE", "READ")
+//                    .and()
+//                .withClient("checktoken")
+//                .secret(passwordEncoder.encode("check123")); // The standard time is 12 hours
     }
 
 // http://localhost:8081/oauth/authorize?response_type=code&client_id=beverage-analytics&redirect_uri=http://client-application
